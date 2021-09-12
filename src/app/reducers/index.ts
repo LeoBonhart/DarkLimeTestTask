@@ -6,15 +6,17 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
-import * as fromUser from './reducers/user.reducer';
-export { UserEffects } from './effects/user.effects';
+import * as basket from '../basket/store/basket.reducer';
+import * as products from '../products/store/products.reducer';
 
 export interface State {
-  [fromUser.userFeatureKey]: fromUser.State;
+  [basket.basketFeatureKey]: basket.State;
+  [products.productsFeatureKey]: products.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [fromUser.userFeatureKey]: fromUser.reducer,
+  [basket.basketFeatureKey]: basket.reducer,
+  [products.productsFeatureKey]: products.reducer,
 };
 
 

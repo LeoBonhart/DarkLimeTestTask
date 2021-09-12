@@ -1,0 +1,106 @@
+@import '~scss-mixin-leobonhart/mixins.scss';
+
+$element-size: 300px;
+$image-size: $element-size;
+
+:host{
+  display: flex;
+  flex-direction: column;
+  width: $element-size;
+  height: auto;
+  margin: 5px;
+  box-shadow: $mui-b-shadow;
+  background-color: var(--primary-bg-color);
+}
+
+img{
+  max-width: $image-size;
+  width: $image-size;
+  height: auto;
+  max-height: $image-size;
+  object-fit: contain;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  .name{
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+  .sizes{
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--size-ripple);
+    border-bottom: 1px solid var(--size-ripple);
+    .size{
+      height: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      @include transition(background);
+      span{
+        @include transition(transform);
+      }
+      &:hover{
+        background-color: var(--size-hover-bg);
+      }
+      &::ng-deep{
+        .mat-ripple-element{
+          background-color: var(--size-ripple);
+        }
+      }
+      &.selected{
+        background-color: var(--size-active-bg);
+        &:hover{
+          background-color: var(--size-active-hover-bg);
+        }
+        &::ng-deep{
+          .mat-ripple-element{
+            background-color: var(--size-ripple);
+          }
+        }
+        span{
+          font-weight: 500;
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+  .price{
+    margin-left: auto;
+    padding: 5px;
+    font-weight: 500;
+  }
+}
+
+
+.buttons{
+  display: flex;
+  overflow: hidden;
+  button{
+    @include transition(color, background, text-shadow);
+    border-radius: 0;
+    background-color: var(--product-button-bg);
+    color: var(--product-button-color);
+    &:hover{
+      background-color: var(--product-button-hover-bg);
+      color: var(--product-button-hover-color);
+    }
+    &:nth-child(1){
+      width: 100%;
+    }
+    &:nth-child(2){
+      margin-left: auto;
+      min-width: 36px;
+      padding: 0;
+      mat-icon{
+        @include transition(text-shadow);
+      }
+    }
+  }
+}

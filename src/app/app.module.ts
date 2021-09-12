@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,9 +8,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { reducers, metaReducers, UserEffects } from './store';
+import { reducers, metaReducers } from './reducers';
+import { ProductsModule } from './products/products.module';
+import { BasketModule } from './basket/basket.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 
-
+registerLocaleData(localeRu, 'ru-RU');
 @NgModule({
   declarations: [
     AppComponent
@@ -18,13 +23,19 @@ import { reducers, metaReducers, UserEffects } from './store';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ProductsModule,
+    BasketModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot(),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{
+    provide: LOCALE_ID,
+    useValue: 'ru-RU'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

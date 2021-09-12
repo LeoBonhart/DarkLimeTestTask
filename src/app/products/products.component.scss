@@ -1,0 +1,39 @@
+@import '~scss-mixin-leobonhart/mixins.scss';
+
+:host{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+
+  @include xs{
+    width: 100%;
+  }
+
+  @include sm{
+    width: 100%;
+  }
+
+  @include md{
+    width: 100%;
+  }
+
+  @include lg{
+    width: 930px;
+  }
+
+  @include xl{
+    width: 930px;
+  }
+
+  @include hd{
+    width: 930px;
+  }
+
+  @include fhd{
+    width: 1200px;
+  }
+}
+

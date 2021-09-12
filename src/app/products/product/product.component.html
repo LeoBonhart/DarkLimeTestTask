@@ -1,0 +1,17 @@
+<ng-container *ngIf="product">
+  <img [src]="image" alt="image">
+  <div class="info">
+    <span class="name">{{ name }}</span>
+    <div class="sizes">
+      <div class="size" matRipple *ngFor="let item of sizes" [ngClass]="{selected: item === size}" (click)="size = item"><span>{{ item }}</span></div>
+    </div>
+    <span class="price">Цена: {{price | currency: 'RUB': 'symbol': '1.2-2' }}</span>
+  </div>
+  <div class="buttons">
+    <button mat-flat-button (click)="buy()">Купить</button>
+    <button mat-flat-button (click)="addToBasket()" matTooltip="Добавить в корзину" matTooltipPosition="above">
+      <mat-icon>shopping_basket</mat-icon>
+    </button>
+  </div>
+</ng-container>
+
