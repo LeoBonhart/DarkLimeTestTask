@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, Effect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { exhaustMap, map, mergeMap } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import * as actions from './basket.actions';
-import { selectBasketAll, selectLastBasketId } from './basket.selectors';
+import { selectLastBasketId } from './basket.selectors';
 
 
 @Injectable()

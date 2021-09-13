@@ -1,4 +1,4 @@
-import { EntityMap, EntityMapOne, Update } from '@ngrx/entity';
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { IBasket } from './basket.reducer';
 

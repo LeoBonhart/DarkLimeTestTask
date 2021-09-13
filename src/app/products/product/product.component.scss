@@ -16,9 +16,12 @@ $image-size: $element-size;
 img{
   max-width: $image-size;
   width: $image-size;
+  min-width: $image-size;
+  min-height: $image-size;
   height: auto;
   max-height: $image-size;
   object-fit: contain;
+  cursor: pointer;
 }
 
 .info{

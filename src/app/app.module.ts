@@ -15,6 +15,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 
+//#region Material
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+const Material = [MatButtonModule, MatIconModule, MatTooltipModule];
+//#endregion
+
 registerLocaleData(localeRu, 'ru-RU');
 @NgModule({
   declarations: [
@@ -25,6 +32,7 @@ registerLocaleData(localeRu, 'ru-RU');
     AppRoutingModule,
     ProductsModule,
     BasketModule,
+    Material,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(),
     StoreRouterConnectingModule.forRoot(),

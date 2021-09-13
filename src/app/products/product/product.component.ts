@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { addToBasket } from 'src/app/basket/store/basket.actions';
 import { MainService } from 'src/app/shared/main.service';
 import { IProduct, Product, TProductSize } from './product';
+import * as productsActions from '../store/products.actions';
 
 @Component({
   selector: 'app-product',
@@ -11,19 +12,26 @@ import { IProduct, Product, TProductSize } from './product';
 })
 export class ProductComponent implements OnInit {
 
-  @Input() product?: Product;
+  @Input() product?: IProduct;
 
-  public sizes: Array<TProductSize> = ['50x50', '100x100', '80x100'];
+  public get sizes(): Array<TProductSize> {
+    return this.product?.sizes;
+  }
 
   public get name(): string {
     return this.product?.name ?? '';
   }
 
   public get size(): TProductSize  {
-    return this.product?.size ?? '100x100';
+    return this.product?.size;
   }
   public set size(v: TProductSize)  {
-    this.product?.size && (this.product.size = v);
+    this.store$.dispatch(productsActions.updateroduct({
+      update: {id: this.product.id, changes: {
+        size: v,
+        price: this.product && this.product.prices && Object.prototype.hasOwnProperty.call(this.product.prices, v as string) ? this.product.prices[v] : 0
+      }}
+    }));
   }
 
   public get image(): string {
@@ -31,7 +39,7 @@ export class ProductComponent implements OnInit {
   }
 
   public get price(): number {
-    return this.product && this.product.price && this.product.size && Object.prototype.hasOwnProperty.call(this.product.price, this.product.size as string) ? this.product.price[this.product.size] : 0;
+    return this.product?.price;
   }
 
   constructor(private mainService: MainService, private store$: Store) { }
@@ -46,4 +54,5 @@ export class ProductComponent implements OnInit {
   addToBasket(): void {
     this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
   }
+
 }

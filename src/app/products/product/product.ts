@@ -4,11 +4,17 @@ interface IProductPrice {
   [prop: string]: number;
 }
 
+interface IProductSizes {
+  [prop: string]: number;
+}
+
 export interface IProduct {
   id: string;
   size: TProductSize;
+  sizes: Array<TProductSize>;
   image: string;
-  price: IProductPrice;
+  prices: IProductPrice;
+  price: number;
   description: string;
   name: string;
 }
@@ -16,12 +22,14 @@ export interface IProduct {
 export class Product implements Partial<IProduct>{
   id?: string;
   size?: TProductSize = '100x100';
+  sizes?: Array<TProductSize> = ['50x50', '100x100', '80x100']
   image?: string;
-  price?: IProductPrice = {
+  prices?: IProductPrice = {
     '50x50': 1000,
     '100x100': 2000,
     '80x100': 1500
   };
+  price?: number = this.prices[this.size];
   description?: string;
   name?: string;
 

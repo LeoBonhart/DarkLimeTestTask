@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, mapTo, reduce, tap } from 'rxjs/operators';
+import { MainService } from '../shared/main.service';
 import * as basketSelectors from './store/basket.selectors';
 
 @Component({
@@ -11,11 +12,9 @@ import * as basketSelectors from './store/basket.selectors';
 })
 export class BasketComponent implements OnInit {
 
-  count$: Observable<number> = this.store$.select(basketSelectors.selectBasketAll).pipe(
-    map(products => products.map(product => product.count ?? 0).reduce((acc, count) => acc + count))
-  );
+  count$: Observable<number> = this.mainService.getSelectCountBasket();
 
-  constructor(private store$: Store) { }
+  constructor(private store$: Store, private mainService: MainService) { }
 
   ngOnInit(): void {
   }

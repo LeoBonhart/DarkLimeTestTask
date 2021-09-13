@@ -1,5 +1,5 @@
 <ng-container *ngIf="product">
-  <img [src]="image" alt="image">
+  <img [src]="image" alt="image" [routerLink]="[product.id]">
   <div class="info">
     <span class="name">{{ name }}</span>
     <div class="sizes">

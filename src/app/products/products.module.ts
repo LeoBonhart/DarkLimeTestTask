@@ -15,13 +15,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 const Material = [MatRippleModule, MatButtonModule, MatIconModule, MatTooltipModule];
 //#endregion
 
+import { ViewComponent } from './view/view.component';
+import { ProductsRoutingModule } from './products-routing.module';
+import { ComponentsModule } from '../shared/components/components.module';
 @NgModule({
   declarations: [
     ProductsComponent,
-    ProductComponent
+    ProductComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,
+    ProductsRoutingModule,
+    ComponentsModule,
     Material,
     StoreModule.forFeature(productsFeatureKey, reducer),
     EffectsModule.forFeature([ProductsEffects]),

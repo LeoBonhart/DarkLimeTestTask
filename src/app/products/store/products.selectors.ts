@@ -1,6 +1,23 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as reducer from './products.reducer';
 
-const productsFeatureSelector = createFeatureSelector<reducer.State>(reducer.productsFeatureKey);
+export interface State {
+  products: reducer.State;
+}
 
-// export const productsLoading = createSelector(productsFeatureSelector, (state) => state.dataLoading);
+export const reducers: ActionReducerMap<State> = {
+  products: reducer.reducer,
+};
+
+export const selectProductsFeatureState = createFeatureSelector<reducer.State>(reducer.productsFeatureKey);
+
+export const selectProductsTotal = createSelector(selectProductsFeatureState, reducer.selectProductsTotal);
+
+export const selectProductsEntities = createSelector(selectProductsFeatureState, reducer.selectProductsEntities);
+
+export const selectProductsAll = createSelector(selectProductsFeatureState, reducer.selectAllProducts);
+
+export const selectProductsIds = createSelector(selectProductsFeatureState, reducer.selectProductsIds);
+
+export const productsLoading = createSelector(selectProductsFeatureState, (state): boolean => state.dataLoading);
+

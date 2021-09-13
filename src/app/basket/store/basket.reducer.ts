@@ -1,4 +1,4 @@
-import { createEntityAdapter, EntityState, Comparer } from '@ngrx/entity';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import { IProduct } from 'src/app/products/product/product';
 import * as actions from './basket.actions';
@@ -7,6 +7,7 @@ import * as actions from './basket.actions';
 export const basketFeatureKey = 'basket';
 
 export interface IBasket extends IProduct {
+  productId?: string;
   count?: number;
 }
 
@@ -23,10 +24,17 @@ export const initialState: State = basketAdapter.getInitialState({
   lastId: ''
 });
 
+/**
+ * Функция создания id продукта корзины
+ */
+const createBasketId = (product: IProduct) => `${product.id}_${product.size}`;
+
 const basketReducer = createReducer(
   initialState,
   on(actions.addToBasket, (state, { product }) => {
-    return {...basketAdapter.addOne(product, state), lastId: product.id};
+    let productId = product.id; // сохраняю id продукта, на всякий случай
+    let id = createBasketId(product); // подменяю id
+    return {...basketAdapter.addOne({...product, id, productId}, state), lastId: id};
   }),
   on(actions.increaseProductInBasket, (state, { id }) => {
     let count = state.entities[id]?.count ?? 0;
