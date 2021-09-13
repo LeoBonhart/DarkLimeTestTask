@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import * as basketSelectors from '../basket/store/basket.selectors';
+import * as basketActions from '../basket/store/basket.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,26 @@ export class MainService {
         return result;
       })
     );
+  }
+
+  getSelectBasketStatus() {
+    return this.store$.select(basketSelectors.selectBasketStatus);
+  }
+
+  openCloseBasket(status: boolean) {
+    status ? this.openBasket() : this.closeBasket();
+  }
+
+  openBasket() {
+    this.store$.dispatch(basketActions.openBasket());
+  }
+
+  closeBasket() {
+    this.store$.dispatch(basketActions.closeBasket());
+  }
+
+  toggleBasket() {
+    this.store$.dispatch(basketActions.toggleBasket());
   }
 
 }

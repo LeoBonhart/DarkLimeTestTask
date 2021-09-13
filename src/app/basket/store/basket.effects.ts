@@ -3,7 +3,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map} from 'rxjs/operators';
 import * as actions from './basket.actions';
-import { selectLastBasketId } from './basket.selectors';
+import { selectBasketStatus, selectLastBasketId } from './basket.selectors';
 
 
 @Injectable()
@@ -18,6 +18,12 @@ export class BasketEffects {
     ofType(actions.addToBasket),
     concatLatestFrom(action => this.store$.select(selectLastBasketId)),
     map(([,id]) => actions.increaseProductInBasket({id}))
+  ));
+
+  toggleBasket$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.toggleBasket),
+    concatLatestFrom(action => this.store$.select(selectBasketStatus)),
+    map(([,status]) => status ? actions.closeBasket() : actions.openBasket())
   ));
 
   constructor(private actions$: Actions, private store$: Store) {}

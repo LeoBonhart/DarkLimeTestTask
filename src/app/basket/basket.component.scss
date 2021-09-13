@@ -1,0 +1,15 @@
+:host{
+
+
+}
+
+mat-drawer-container{
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+  ::ng-deep{
+    .mat-drawer-shown{
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+}

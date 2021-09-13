@@ -20,3 +20,6 @@ export const selectBasketAll = createSelector(selectBasketFeatureState, reducer.
 export const selectBasketIds = createSelector(selectBasketFeatureState, reducer.selectBasketIds);
 
 export const selectLastBasketId = createSelector(selectBasketFeatureState, (state): string => state.lastId);
+
+export const selectBasketStatus = createSelector(selectBasketFeatureState, (state): boolean => state.openBasket);
+

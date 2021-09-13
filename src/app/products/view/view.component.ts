@@ -77,6 +77,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   buy(): void {
     this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
+    this.mainService.openBasket();
   }
 
   addToBasket(): void {

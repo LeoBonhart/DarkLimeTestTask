@@ -36,3 +36,14 @@ export const updateDate = createAction(
   props<{date: number}>()
 );
 
+export const openBasket = createAction(
+  '[Basket] Open basket'
+);
+
+export const closeBasket = createAction(
+  '[Basket] Close basket'
+);
+
+export const toggleBasket = createAction(
+  '[Basket] Toggle basket'
+);

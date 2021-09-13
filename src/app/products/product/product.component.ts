@@ -49,6 +49,7 @@ export class ProductComponent implements OnInit {
 
   buy(): void {
     this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
+    this.mainService.openBasket();
   }
 
   addToBasket(): void {

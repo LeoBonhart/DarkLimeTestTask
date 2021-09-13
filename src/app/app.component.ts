@@ -15,9 +15,11 @@ export class AppComponent {
 
   totalPrice$ = this.mainService.getSelectTotalPriceOfBasket();
 
+  statusBasket$ = this.mainService.getSelectBasketStatus();
+
   constructor(private mainService: MainService) {}
 
   openBasket() {
-    console.log('Open Basket');
+    this.mainService.toggleBasket();
   }
 }

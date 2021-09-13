@@ -19,7 +19,8 @@ import localeRu from '@angular/common/locales/ru';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-const Material = [MatButtonModule, MatIconModule, MatTooltipModule];
+import { MatSidenavModule } from '@angular/material/sidenav';
+const Material = [MatButtonModule, MatIconModule, MatTooltipModule, MatSidenavModule];
 //#endregion
 
 registerLocaleData(localeRu, 'ru-RU');

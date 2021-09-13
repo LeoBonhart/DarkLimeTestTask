@@ -14,6 +14,7 @@ export interface IBasket extends IProduct {
 export interface State extends EntityState<IBasket> {
   updateDate: number;
   lastId: string;
+  openBasket: boolean;
 }
 
 export const basketAdapter = createEntityAdapter<IBasket>();
@@ -21,7 +22,8 @@ export const basketAdapter = createEntityAdapter<IBasket>();
 
 export const initialState: State = basketAdapter.getInitialState({
   updateDate: Date.now(),
-  lastId: ''
+  lastId: '',
+  openBasket: false
 });
 
 /**
@@ -59,6 +61,15 @@ const basketReducer = createReducer(
   on(actions.updateDate, (state, { date }) => ({
     ...state,
     updateDate: date
+  })),
+  on(actions.openBasket, (state) => ({
+    ...state, openBasket: true
+  })),
+  on(actions.closeBasket, (state) => ({
+    ...state, openBasket: false
+  })),
+  on(actions.toggleBasket, (state) => ({
+    ...state
   }))
 );
 
