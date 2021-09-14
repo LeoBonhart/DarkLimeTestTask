@@ -1,0 +1,57 @@
+::ng-deep{
+
+  .mat-dialog-container{
+    background-color: var(--basket-dialog-bg);
+    color: var(--basket-dialog-color);
+  }
+  .mat-dialog-title{
+
+  }
+  .mat-dialog-content{
+    font-size: 14px;
+    .detail{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      span{
+        &:nth-child(2){
+          color: var(--basket-dialog-price-color);
+        }
+      }
+    }
+    .mat-form-field-appearance-fill .mat-form-field-underline::before {
+      background-color: rgba(255, 255, 255, 0.42);
+    }
+    .mat-form-field{
+      width: 100%;
+      .mat-input-element{
+        &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: rgba(255, 255, 255, 0.6);
+          opacity: 1; /* Firefox */
+        }
+
+        &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        &::-ms-input-placeholder { /* Microsoft Edge */
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+      .mat-form-field-label {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .mat-form-field-ripple {
+        background-color: rgba(255, 255, 255, 0.87);
+      }
+      &.mat-form-field-invalid .mat-form-field-ripple, &.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
+        background-color: #f44336;
+      }
+    }
+  }
+  .mat-dialog-actions{
+    justify-content: space-between;
+  }
+}
+
+

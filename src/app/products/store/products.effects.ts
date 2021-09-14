@@ -10,7 +10,7 @@ export class ProductsEffects {
 
   loadProducts$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadProducts),
-    mergeMap(() => this.productDatabaseService.getProducts().pipe(
+    mergeMap(() => this.productDatabaseService.getProducts().pipe( // переключаю поток на запрос к бд за товарами
       map(products => actions.loadProductsSuccess({products})),
       catchError((error) => of(actions.loadProductsFailure({error})))
     ))

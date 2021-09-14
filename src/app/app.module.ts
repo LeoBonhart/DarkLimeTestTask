@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
-const Material = [MatButtonModule, MatIconModule, MatTooltipModule, MatSidenavModule];
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+const Material = [MatButtonModule, MatIconModule, MatTooltipModule, MatSidenavModule, MatSnackBarModule];
 //#endregion
 
 registerLocaleData(localeRu, 'ru-RU');

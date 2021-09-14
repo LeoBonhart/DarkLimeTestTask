@@ -9,6 +9,9 @@ export class ProductsService {
 
   constructor() { }
 
+  /**
+   * Типа запрос к БД за списком товаров
+   */
   getProducts() {
     return new Observable<Array<IProduct>>((subscriber) => {
       setTimeout(() => {

@@ -1,0 +1,79 @@
+@import '~scss-mixin-leobonhart/mixins.scss';
+
+$element-size: 300px;
+$image-size: 100px;
+
+:host{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+
+.left-side{
+  img{
+    max-width: $image-size;
+    width: 100%;
+    height: auto;
+    max-height: $image-size;
+    object-fit: contain;
+  }
+}
+.right-side{
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .name{
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    .remove-product{
+      cursor: pointer;
+      color: var(--basket-remove-icon-color);
+      font-size: 16px;
+      line-height: 16px;
+      height: 16px;
+      width: 16px;
+      margin-left: auto;
+      margin-top: auto;
+      margin-bottom: auto;
+      @include transition(color);
+      &:hover{
+        color: var(--basket-remove-icon-hover-color);
+      }
+    }
+  }
+  .info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--basket-info-color);
+    .size{
+      font-size: 12px;
+    }
+    .price{
+      font-size: 12px;
+      color: var(--basket-info-price-color);
+    }
+  }
+  .count{
+    display: flex;
+    align-items: center;
+    .count-value{
+      font-size: 16px;
+    }
+    .count-buttons{
+      margin-left: auto;
+      button{
+        background-color: var(--basket-count-button-bg);
+        @include transition(background);
+        &:hover{
+          background-color: var(--basket-count-button-hover-bg);
+        }
+        &:nth-child(1){
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

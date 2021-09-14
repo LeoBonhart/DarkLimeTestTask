@@ -1,6 +1,19 @@
-<mat-drawer-container class="example-container" hasBackdrop="true">
-  <mat-drawer #drawer mode="over" position="end">I'm a drawer</mat-drawer>
-  <mat-drawer-content>
+<mat-sidenav-container class="example-container" hasBackdrop="true">
+  <mat-sidenav #drawer mode="over" position="end" fixedInViewport="true" fixedTopGap="50">
+    <ng-container *ngIf="!(empty$ | async); else elseEmpty">
+      <button class="clear-basket" mat-stroked-button (click)="clear()">Очистить корзину</button>
+      <ng-container *ngFor="let item of basketList$ | async">
+        <app-element [element]="item"></app-element>
+      </ng-container>
+      <button class="buy-products" mat-flat-button (click)="buy()">Оформить заказ</button>
+    </ng-container>
+    <ng-template #elseEmpty>
+      <span class="empty-basket">
+        Корзина пустая
+      </span>
+    </ng-template>
+  </mat-sidenav>
+  <mat-sidenav-content>
     <ng-content></ng-content>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

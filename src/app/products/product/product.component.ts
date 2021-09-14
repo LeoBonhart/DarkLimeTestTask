@@ -14,18 +14,23 @@ export class ProductComponent implements OnInit {
 
   @Input() product?: IProduct;
 
+  /** Список размеров товара */
   public get sizes(): Array<TProductSize> {
     return this.product?.sizes;
   }
 
+  /** Название товара */
   public get name(): string {
     return this.product?.name ?? '';
   }
 
+  /** Размер товара */
   public get size(): TProductSize  {
     return this.product?.size;
   }
+  /** Размер товара */
   public set size(v: TProductSize)  {
+    // обновляю товар, меняю размер, и задаю цену в соответствии с размером
     this.store$.dispatch(productsActions.updateroduct({
       update: {id: this.product.id, changes: {
         size: v,
@@ -34,10 +39,12 @@ export class ProductComponent implements OnInit {
     }));
   }
 
+  /** Изображение товара */
   public get image(): string {
     return this.mainService.getImage(this.product?.image as string);
   }
 
+  /** Цена товара */
   public get price(): number {
     return this.product?.price;
   }
@@ -47,11 +54,17 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Добавляют товар в корзину и открываю ее
+   */
   buy(): void {
-    this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
+    this.addToBasket();
     this.mainService.openBasket();
   }
 
+  /**
+   * Просто добавлюя товар в корзину
+   */
   addToBasket(): void {
     this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
   }

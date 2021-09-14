@@ -1,9 +1,11 @@
+@import '~scss-mixin-leobonhart/mixins.scss';
+
 :host{
 
 
 }
 
-mat-drawer-container{
+mat-sidenav-container{
   background-color: var(--main-bg-color);
   color: var(--main-color);
   ::ng-deep{
@@ -11,5 +13,32 @@ mat-drawer-container{
       background-color: rgba(0, 0, 0, 0.2);
     }
   }
-
+  mat-sidenav{
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--basket-sidenav-bg);
+    color: var(--basket-sidenav-color);
+    ::ng-deep{
+      .mat-drawer-inner-container{
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        .empty-basket{
+          margin: auto;
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .buy-products{
+          background-color: var(--basket-buy-button-bg);
+          color: var(--basket-buy-button-color);
+          @include transition(background, color);
+          &:hover{
+            background-color: var(--basket-buy-button-hover-bg);
+            color: var(--basket-buy-button-hover-color);
+          }
+        }
+      }
+    }
+  }
 }

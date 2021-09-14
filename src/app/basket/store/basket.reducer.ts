@@ -70,6 +70,15 @@ const basketReducer = createReducer(
   })),
   on(actions.toggleBasket, (state) => ({
     ...state
+  })),
+  on(actions.buyBasket, (state) => ({
+    ...state
+  })),
+  on(actions.successBuyBasket, (state) => {
+    return basketAdapter.removeAll(state)
+  }),
+  on(actions.errorBuyBasket, (state) => ({
+    ...state
   }))
 );
 

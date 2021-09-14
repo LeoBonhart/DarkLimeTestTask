@@ -36,31 +36,7 @@ $DarkLimeTestTask-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-
-:root {
-  --main-bg-color: #212121;
-  --primary-bg-color: #424242;
-  --main-color: #FFFFFF;
-
-  --nav-bg-color: #424242;
-  --nav-color: #eeeeee;
-  --nav-basket-empty-color: #9e9e9e;
-  --nav-basket-not-empty-color: #ffca28;
-  --nav-basket-count-color: #42a5f5;
-  --nav-basket-price-color: #66bb6a;
-
-  --size-hover-bg: #616161;
-  --size-active-bg: #757575;
-  --size-active-hover-bg: #757575;
-  --size-ripple: rgba(190,190,190, 0.2);
-
-  --product-button-bg: #c56000;
-  --product-button-color: #424242;
-  --product-button-hover-bg: #ff8f00;
-  --product-button-hover-color: #870000;
-  --product-price-color: #66bb6a;
-}
-
+@import './colors.scss';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

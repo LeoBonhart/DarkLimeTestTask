@@ -1,0 +1,24 @@
+<form #form [formGroup]="myForm" id="order_form" class="order_form" _lpchecked="1" (ngSubmit)="submit()">
+  <h1 mat-dialog-title>Подтвердите покупку</h1>
+  <div mat-dialog-content>
+    <div class="detail">
+      <span>Количество: {{ count$ | async }}</span>
+      <span>Сумма: {{ totalPrice$ | async | currency: 'RUB': 'symbol': '1.2-2' }}</span>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>ФИО</mat-label>
+      <input matInput placeholder="Введите ФИО" formControlName="username" name="username" required>
+      <mat-error *ngIf="errorPredicate('username', 'required')">Не указана ФИО</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Номер телефона</mat-label>
+      <span matPrefix>+7 &nbsp;</span>
+      <input matInput placeholder="555-555-1234" formControlName="phone" name="phone" required type="tel" minlength="9" [appOnlyNumber]="true">
+      <mat-error *ngIf="errorPredicate('phone', 'required')">Не указан номер телефона</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()" type="button">Отмена</button>
+    <button mat-button type="submit">Купить</button>
+  </div>
+</form>

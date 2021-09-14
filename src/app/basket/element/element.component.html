@@ -1,0 +1,23 @@
+<ng-container *ngIf="element">
+  <div class="left-side">
+    <img [src]="image" alt="image">
+  </div>
+  <div class="right-side">
+    <span class="name">{{ name }} <mat-icon class="remove-product" (click)="deleteProduct()">delete</mat-icon></span>
+    <div class="info">
+      <span class="size">Размер: {{ size }}см</span>
+      <span class="price">Цена: {{price | currency: 'RUB': 'symbol': '1.2-2' }}</span>
+    </div>
+    <div class="count">
+      <span class="count-value">Количество: {{ count }}</span>
+      <div class="count-buttons">
+        <button mat-icon-button (click)="increase()" matTooltip="Увеличить" matTooltipPosition="above">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="decrease()" matTooltip="Уменьшить" matTooltipPosition="above">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

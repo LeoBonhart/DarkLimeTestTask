@@ -47,3 +47,15 @@ export const closeBasket = createAction(
 export const toggleBasket = createAction(
   '[Basket] Toggle basket'
 );
+
+export const buyBasket = createAction(
+  '[Basket] Buy products from basket'
+);
+
+export const successBuyBasket = createAction(
+  '[Basket] Success buy basket'
+);
+
+export const errorBuyBasket = createAction(
+  '[Basket] Error buy basket'
+);
