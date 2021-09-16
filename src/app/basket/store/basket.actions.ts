@@ -1,5 +1,7 @@
+import { Injectable } from '@angular/core';
 import { Update } from '@ngrx/entity';
-import { createAction, props } from '@ngrx/store';
+import { createAction, props, Store } from '@ngrx/store';
+import { IProduct } from 'src/app/products/product/product';
 import { IBasket } from './basket.reducer';
 
 export const addToBasket = createAction(
@@ -59,3 +61,75 @@ export const successBuyBasket = createAction(
 export const errorBuyBasket = createAction(
   '[Basket] Error buy basket'
 );
+@Injectable()
+export class ActionsBasketService {
+
+  constructor(private store$: Store) {}
+
+  /**
+   * Открытие закрыти корзины
+   * @param status Статус true открыть, false закрыть
+   */
+   openCloseBasket(status: boolean) {
+    status ? this.openBasket() : this.closeBasket();
+  }
+
+  /**
+   * Открыть коризину
+   */
+  openBasket() {
+    this.store$.dispatch(openBasket());
+  }
+
+  /**
+   * Закрыть корзину
+   */
+  closeBasket() {
+    this.store$.dispatch(closeBasket());
+  }
+
+  /**
+   * Переклчение состояние открытия корзины
+   */
+  toggleBasket() {
+    this.store$.dispatch(toggleBasket());
+  }
+
+  /**
+   * Очистка корзины
+   */
+  clearBasket() {
+    this.store$.dispatch(clearBasket());
+  }
+
+  /**
+   * Покупка товаров
+   */
+  buyBasket() {
+    this.store$.dispatch(buyBasket());
+  }
+
+  /**
+   * Добавлюя товар в корзину
+   * @param product товар
+   */
+  addToBasket(product: IProduct) {
+    this.store$.dispatch(addToBasket({product: {...product}}));
+  }
+
+  /**
+   * Обновление товара в корзине
+   * @param update товар
+   */
+   updateBasket(update: Update<IBasket>) {
+     this.store$.dispatch(updateBasket({ update }));
+  }
+
+  /**
+   * Удаление товара из корзины
+   * @param id идентификатор товара
+   */
+  removeFromBasket(id: string) {
+    this.store$.dispatch(removeFromBasket({id}));
+  }
+}

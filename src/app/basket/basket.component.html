@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-container" hasBackdrop="true">
   <mat-sidenav #drawer mode="over" position="end" fixedInViewport="true" fixedTopGap="50">
-    <ng-container *ngIf="!(empty$ | async); else elseEmpty">
+    <ng-container *ngIf="!(emptyBasket$ | async); else elseEmpty">
       <button class="clear-basket" mat-stroked-button (click)="clear()">Очистить корзину</button>
       <ng-container *ngFor="let item of basketList$ | async">
         <app-element [element]="item"></app-element>

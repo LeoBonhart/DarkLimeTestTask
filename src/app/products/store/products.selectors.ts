@@ -1,4 +1,5 @@
-import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { ActionReducerMap, createFeatureSelector, createSelector, Store } from '@ngrx/store';
 import * as reducer from './products.reducer';
 
 export interface State {
@@ -21,3 +22,17 @@ export const selectProductsIds = createSelector(selectProductsFeatureState, redu
 
 export const productsLoading = createSelector(selectProductsFeatureState, (state): boolean => state.dataLoading);
 
+@Injectable()
+export class SelectsProductsService {
+
+  constructor(private store$: Store){}
+
+  productsLoading() {
+    return this.store$.select(productsLoading)
+  }
+
+  selectProductsAll() {
+    return this.store$.select(selectProductsAll)
+  }
+
+}

@@ -27,7 +27,7 @@ export class MainService {
   /** путь к папке с изображениями */
   readonly imageSrc: string = 'assets/images/';
 
-  constructor(private store$: Store, private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   /**
    * Вызов snackBar
@@ -46,68 +46,6 @@ export class MainService {
    */
   getImage(name: string): string {
     return this.imageSrc + name;
-  }
-
-  /**
-   * Получение селекта количества елементов в корзине
-   */
-  getSelectCountBasket() {
-    return this.store$.select(basketSelectors.selectBasketAll).pipe(
-      map(products => {
-        let counts = products.map(product => product.count ?? 0);
-        let result = counts.length > 0 ? counts.reduce((acc, count) => acc + count) : 0;
-        return result;
-      })
-    );
-  }
-
-  /**
-   * Получение селекта суммы цены елементов в корзине
-   */
-  getSelectTotalPriceOfBasket() {
-    return this.store$.select(basketSelectors.selectBasketAll).pipe(
-      map(products => {
-        let prices = products.map(product => product.price * product.count);
-        let result = prices.length > 0 ? prices.reduce((acc, count) => acc + count) : 0;
-        return result;
-      })
-    );
-  }
-
-  /**
-   * Получение селекта статуса открытия корзины
-   */
-  getSelectBasketStatus() {
-    return this.store$.select(basketSelectors.selectBasketStatus);
-  }
-
-  /**
-   * Открытие закрыти корзины
-   * @param status Статус true открыть, false закрыть
-   */
-  openCloseBasket(status: boolean) {
-    status ? this.openBasket() : this.closeBasket();
-  }
-
-  /**
-   * Открыть коризину
-   */
-  openBasket() {
-    this.store$.dispatch(basketActions.openBasket());
-  }
-
-  /**
-   * Закрыть корзину
-   */
-  closeBasket() {
-    this.store$.dispatch(basketActions.closeBasket());
-  }
-
-  /**
-   * Переклчение состояние открытия корзины
-   */
-  toggleBasket() {
-    this.store$.dispatch(basketActions.toggleBasket());
   }
 
 }

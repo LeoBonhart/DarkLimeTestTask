@@ -1,15 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav/drawer';
-import { Store } from '@ngrx/store';
-import { map, skipWhile, switchMap, tap } from 'rxjs/operators';
-import { MainService } from '../shared/main.service';
-import * as basketSelectors from './store/basket.selectors';
-import * as basketActions from './store/basket.actions';
+import { skipWhile, switchMap, tap } from 'rxjs/operators';
+import { SelectsBasketService } from './store/basket.selectors';
+import { ActionsBasketService } from './store/basket.actions';
 
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.scss']
+  styleUrls: ['./basket.component.scss'],
+  providers: [
+    ActionsBasketService,
+    SelectsBasketService
+  ]
 })
 export class BasketComponent implements OnInit, AfterViewInit {
 
@@ -17,21 +19,18 @@ export class BasketComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer', {static: false}) private matDrawer: MatDrawer|undefined;
 
   /** количество товаров в корзине */
-  count$ = this.mainService.getSelectCountBasket();
+  countBasket$ = this.selectsBasketService.getSelectCountBasket();
 
   /** статус пустой корзины */
-  empty$ = this.count$.pipe(map(x => x === 0));
-
-  /** сумма товаров в корзине */
-  totalPrice$ = this.mainService.getSelectTotalPriceOfBasket();
+  emptyBasket$ = this.selectsBasketService.getSelectEmptyBasket();
 
   /** список товаров в корзине */
-  basketList$ = this.store$.select(basketSelectors.selectBasketAll);
+  basketList$ = this.selectsBasketService.getSelectBasketList();
 
   /** статус открытия корзины */
-  statusBasket$ = this.mainService.getSelectBasketStatus();
+  statusBasket$ = this.selectsBasketService.getSelectBasketStatus();
 
-  constructor(private store$: Store, private mainService: MainService) { }
+  constructor(private selectsBasketService: SelectsBasketService, private actionsBasketSevice: ActionsBasketService) { }
 
   ngAfterViewInit(): void {
     this.statusBasket$.pipe(
@@ -39,7 +38,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
       switchMap((status) => { // переопределяю поток на состояние компонента sidenav и пропускаю события если статус одинаковый (чтобы не вызывались одинаковые события store)
         return this.matDrawer.openedChange.pipe(skipWhile(x => x === status))
       })
-    ).subscribe(status => this.mainService.openCloseBasket(status))
+    ).subscribe(status => this.actionsBasketSevice.openCloseBasket(status))
   }
 
   ngOnInit(): void {
@@ -49,14 +48,14 @@ export class BasketComponent implements OnInit, AfterViewInit {
    * Покупка товаров
    */
   buy() {
-    this.store$.dispatch(basketActions.buyBasket());
+    this.actionsBasketSevice.buyBasket();
   }
 
   /**
    * Очистить корзину
    */
   clear() {
-    this.store$.dispatch(basketActions.clearBasket());
-    this.mainService.closeBasket();
+    this.actionsBasketSevice.clearBasket();
+    this.actionsBasketSevice.closeBasket();
   }
 }

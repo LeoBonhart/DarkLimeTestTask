@@ -2,8 +2,8 @@
   <h1 mat-dialog-title>Подтвердите покупку</h1>
   <div mat-dialog-content>
     <div class="detail">
-      <span>Количество: {{ count$ | async }}</span>
-      <span>Сумма: {{ totalPrice$ | async | currency: 'RUB': 'symbol': '1.2-2' }}</span>
+      <span>Количество: {{ countBasket$ | async }}</span>
+      <span>Сумма: {{ totalPriceBasket$ | async | currency: 'RUB': 'symbol': '1.2-2' }}</span>
     </div>
     <mat-form-field appearance="fill">
       <mat-label>ФИО</mat-label>

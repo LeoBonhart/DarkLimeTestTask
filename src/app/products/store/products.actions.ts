@@ -1,5 +1,6 @@
+import { Injectable } from '@angular/core';
 import { Update } from '@ngrx/entity';
-import { createAction, props } from '@ngrx/store';
+import { createAction, props, Store } from '@ngrx/store';
 import { IProduct } from '../product/product';
 
 export const loadProducts = createAction(
@@ -16,9 +17,29 @@ export const loadProductsFailure = createAction(
   props<{ error: any }>()
 );
 
-export const updateroduct = createAction(
+export const updateProduct = createAction(
   '[Products] Update product',
   props<{update: Update<IProduct>}>()
 );
 
+@Injectable()
+export class ActionsProductsService {
 
+  constructor(private store$: Store) {}
+
+  /**
+   * Обновление продукта
+   * @param update Обновления
+   */
+  updateProduct(update: Update<IProduct>) {
+    this.store$.dispatch(updateProduct({ update }));
+  }
+
+  /**
+   * Загрузка товаров
+   */
+  loadProducts() {
+    this.store$.dispatch(loadProducts())
+  }
+
+}

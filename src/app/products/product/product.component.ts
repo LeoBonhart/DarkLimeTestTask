@@ -1,14 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { addToBasket } from 'src/app/basket/store/basket.actions';
+import { Component, Input, OnInit } from '@angular/core';
 import { MainService } from 'src/app/shared/main.service';
-import { IProduct, Product, TProductSize } from './product';
-import * as productsActions from '../store/products.actions';
+import { IProduct, TProductSize } from './product';
+import { ActionsProductsService } from '../store/products.actions';
+import { ActionsBasketService } from 'src/app/basket/store/basket.actions';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
+  providers: [
+    ActionsProductsService,
+    ActionsBasketService
+  ]
 })
 export class ProductComponent implements OnInit {
 
@@ -31,12 +34,13 @@ export class ProductComponent implements OnInit {
   /** Размер товара */
   public set size(v: TProductSize)  {
     // обновляю товар, меняю размер, и задаю цену в соответствии с размером
-    this.store$.dispatch(productsActions.updateroduct({
-      update: {id: this.product.id, changes: {
+    this.actionsProductsService.updateProduct({
+      id: this.product.id,
+      changes: {
         size: v,
         price: this.product && this.product.prices && Object.prototype.hasOwnProperty.call(this.product.prices, v as string) ? this.product.prices[v] : 0
-      }}
-    }));
+      }
+    });
   }
 
   /** Изображение товара */
@@ -49,7 +53,7 @@ export class ProductComponent implements OnInit {
     return this.product?.price;
   }
 
-  constructor(private mainService: MainService, private store$: Store) { }
+  constructor(private mainService: MainService, private actionsBasketService: ActionsBasketService, private actionsProductsService: ActionsProductsService) { }
 
   ngOnInit(): void {
   }
@@ -59,14 +63,14 @@ export class ProductComponent implements OnInit {
    */
   buy(): void {
     this.addToBasket();
-    this.mainService.openBasket();
+    this.actionsBasketService.openBasket();
   }
 
   /**
    * Просто добавлюя товар в корзину
    */
   addToBasket(): void {
-    this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
+    this.actionsBasketService.addToBasket(this.product);
   }
 
 }

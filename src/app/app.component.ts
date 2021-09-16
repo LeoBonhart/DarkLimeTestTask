@@ -1,32 +1,37 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { MainService } from './shared/main.service';
+import { ActionsBasketService } from './basket/store/basket.actions';
+import { SelectsBasketService } from './basket/store/basket.selectors';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [
+    ActionsBasketService,
+    SelectsBasketService
+  ]
 })
 export class AppComponent {
 
   /** количество товаров в корзине */
-  count$ = this.mainService.getSelectCountBasket();
+  countBasket$ = this.selectsBasketService.getSelectCountBasket();
 
   /** статус пустой корзины */
-  empty$ = this.count$.pipe(map(x => x === 0));
+  emptyBasket$ = this.selectsBasketService.getSelectEmptyBasket();
 
   /** сумма товаров в корзине */
-  totalPrice$ = this.mainService.getSelectTotalPriceOfBasket();
+  totalPriceBasket$ = this.selectsBasketService.getSelectTotalPriceOfBasket();
 
   /** статус открытия корзины */
-  statusBasket$ = this.mainService.getSelectBasketStatus();
+  statusBasket$ = this.selectsBasketService.getSelectBasketStatus();
 
-  constructor(private mainService: MainService) {}
+  constructor(private selectsBasketService: SelectsBasketService, private actionsBasketService: ActionsBasketService) {}
 
   /**
    * Открытие/закрытие корзины
    */
   openBasket() {
-    this.mainService.toggleBasket();
+    this.actionsBasketService.toggleBasket();
   }
 }

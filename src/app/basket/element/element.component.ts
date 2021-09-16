@@ -1,14 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { TProductSize } from 'src/app/products/product/product';
 import { IBasket } from '../store/basket.reducer';
-import * as basketActions from '../store/basket.actions';
+import { ActionsBasketService } from '../store/basket.actions';
 import { MainService } from 'src/app/shared/main.service';
 
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
-  styleUrls: ['./element.component.scss']
+  styleUrls: ['./element.component.scss'],
+  providers: [
+    ActionsBasketService
+  ]
 })
 export class ElementComponent implements OnInit {
 
@@ -33,11 +35,12 @@ export class ElementComponent implements OnInit {
   /** Количество товара */
   public set count(v: number)  {
     // если меняется количестов, вызываю событие на изменение товара корзины, и меняю количество
-    this.store$.dispatch(basketActions.updateBasket({
-      update: {id: this.element.id, changes: {
+    this.actionsBasketService.updateBasket({
+      id: this.element.id,
+      changes: {
         count: v
-      }}
-    }));
+      }
+    });
   }
 
   /** Изображение товара */
@@ -50,7 +53,7 @@ export class ElementComponent implements OnInit {
     return this.element.price * this.element.count;
   }
 
-  constructor(private store$: Store, private mainService: MainService) { }
+  constructor(private actionsBasketService: ActionsBasketService, private mainService: MainService) { }
 
   ngOnInit(): void {
   }
@@ -73,6 +76,6 @@ export class ElementComponent implements OnInit {
    * Удаление продукта из корзины
    */
   deleteProduct() {
-    this.store$.dispatch(basketActions.removeFromBasket({id: this.element.id}));
+    this.actionsBasketService.removeFromBasket(this.element.id);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MainService } from 'src/app/shared/main.service';
+import { SelectsBasketService } from '../store/basket.selectors';
 
 interface IControls{
   username: Array<any>;
@@ -16,19 +16,22 @@ export interface IUserData{
 @Component({
   selector: 'app-buy-dialgo',
   templateUrl: './buy-dialog.component.html',
-  styleUrls: ['./buy-dialog.component.scss']
+  styleUrls: ['./buy-dialog.component.scss'],
+  providers: [
+    SelectsBasketService
+  ]
 })
 export class BuyDialogComponent implements OnInit {
 
   /** количество товаров в корзине */
-  count$ = this.mainService.getSelectCountBasket();
+  countBasket$ = this.selectsBasketService.getSelectCountBasket();
 
   /** сумма товаров в корзине */
-  totalPrice$ = this.mainService.getSelectTotalPriceOfBasket();
+  totalPriceBasket$ = this.selectsBasketService.getSelectTotalPriceOfBasket();
 
   myForm: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef<BuyDialogComponent>, private formBuilder: FormBuilder, private mainService: MainService) { }
+  constructor(private dialogRef: MatDialogRef<BuyDialogComponent>, private formBuilder: FormBuilder, private selectsBasketService: SelectsBasketService) { }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group(<IControls>{

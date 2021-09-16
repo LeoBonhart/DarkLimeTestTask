@@ -10,7 +10,11 @@ $image-size: 360px;
   background-color: var(--primary-bg-color);
   margin-left: auto;
   margin-right: auto;
-  height: calc(100vh - 50px);;
+  height: calc(100vh - 50px);
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .left-side{
@@ -90,7 +94,6 @@ $image-size: 360px;
       color: var(--product-price-color);
     }
   }
-
 
   .buttons{
     display: flex;

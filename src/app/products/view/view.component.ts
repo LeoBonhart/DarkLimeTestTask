@@ -1,18 +1,22 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map, skipWhile, switchMap, tap } from 'rxjs/operators';
 import { IProduct, TProductSize } from '../product/product';
-import * as productsSelectors from '../store/products.selectors';
-import * as productsActions from '../store/products.actions';
-import { addToBasket } from 'src/app/basket/store/basket.actions';
+import { SelectsProductsService } from '../store/products.selectors';
+import { ActionsProductsService } from '../store/products.actions';
+import { ActionsBasketService } from 'src/app/basket/store/basket.actions';
 import { MainService } from 'src/app/shared/main.service';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  styleUrls: ['./view.component.scss'],
+  providers: [
+    ActionsProductsService,
+    ActionsBasketService,
+    SelectsProductsService
+  ]
 })
 export class ViewComponent implements OnInit, OnDestroy {
 
@@ -37,12 +41,13 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
   /** Размер товара */
   public set size(v: TProductSize)  {
-    this.store$.dispatch(productsActions.updateroduct({
-      update: {id: this.product.id, changes: {
+    this.actionsProductsService.updateProduct({
+      id: this.product.id,
+      changes: {
         size: v,
         price: this.price
-      }}
-    }));
+      }
+    });
   }
 
   /** Изображение товара */
@@ -57,10 +62,10 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   /** признак загрузки данных */
-  dataLoading$ = this.store$.select(productsSelectors.productsLoading);
+  dataLoading$ = this.selectsProductsService.productsLoading();
 
   /** список товаров */
-  dataListProducts$ = this.store$.select(productsSelectors.selectProductsAll);
+  dataListProducts$ = this.selectsProductsService.selectProductsAll();
 
   /** товар */
   product: IProduct;
@@ -68,13 +73,20 @@ export class ViewComponent implements OnInit, OnDestroy {
   /** Подпись на получение товара по id */
   subscription$: Subscription;
 
-  constructor(private activateRoute: ActivatedRoute, private store$: Store, private router: Router, private mainService: MainService) { }
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private mainService: MainService,
+    private selectsProductsService: SelectsProductsService,
+    private actionsProductsService: ActionsProductsService,
+    private actionsBasketService: ActionsBasketService
+    ) { }
 
   ngOnInit(): void {
     this.subscription$ = this.activateRoute.params.pipe(
       switchMap(params => {
         return this.dataListProducts$.pipe(
-          tap(x => (x.length === 0 && this.store$.dispatch(productsActions.loadProducts()))), // если еще нет продуктов
+          tap(x => (x.length === 0 && this.actionsProductsService.loadProducts())), // если еще нет продуктов
           skipWhile(x => x.length === 0), // жду пока они загрузяться
           map(products => products.filter(x => x.id === params['id'])[0]) // получаю продукт по id
         );
@@ -92,14 +104,14 @@ export class ViewComponent implements OnInit, OnDestroy {
    */
   buy(): void {
     this.addToBasket();
-    this.mainService.openBasket();
+    this.actionsBasketService.openBasket();
   }
 
   /**
    * Просто добавляю товар в корзину
    */
   addToBasket(): void {
-    this.store$.dispatch(addToBasket({product: {...this.product as IProduct}}));
+    this.actionsBasketService.addToBasket(this.product);
   }
 
 }

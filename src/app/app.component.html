@@ -1,8 +1,8 @@
 <nav>
   <div class="basket-container">
-    <span class="total-price" *ngIf="!(empty$ | async)">{{totalPrice$ | async | currency: 'RUB': 'symbol': '1.0'}}</span>
-    <span class="count" *ngIf="!(empty$ | async)">{{count$ | async}}</span>
-    <button mat-icon-button [ngClass]="{empty: empty$ | async}" (click)="openBasket()">
+    <span class="total-price" *ngIf="!(emptyBasket$ | async)">{{totalPriceBasket$ | async | currency: 'RUB': 'symbol': '1.0'}}</span>
+    <span class="count" *ngIf="!(emptyBasket$ | async)">{{countBasket$ | async}}</span>
+    <button mat-icon-button [ngClass]="{empty: emptyBasket$ | async}" (click)="openBasket()">
       <mat-icon>shopping_basket</mat-icon>
     </button>
   </div>

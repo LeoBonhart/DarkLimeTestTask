@@ -3,7 +3,6 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { IProduct } from '../product/product';
 import * as actions from './products.actions';
 
-
 export const productsFeatureKey = 'Products';
 
 export interface State extends EntityState<IProduct> {
@@ -29,7 +28,7 @@ const productsReducer = createReducer(
   on(actions.loadProductsSuccess, (state, {products}) => {
     return {...productsAdapter.addMany(products, state), dataLoading: false};
   }),
-  on(actions.updateroduct, (state, {update}) => {
+  on(actions.updateProduct, (state, {update}) => {
     return productsAdapter.updateOne(update, state);
   }),
   on(actions.loadProductsFailure, (state) => ({
